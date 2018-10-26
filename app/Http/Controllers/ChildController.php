@@ -14,8 +14,8 @@ class ChildController extends Controller
 		$this->middleware('is_a_parent');
 	}
 	public function index(){
-		$children = Child::all();
-		return view("babah.index");
+		$children = Child::with('questions')->get();
+		return view("babah.index", compact("children"));
 	}
 	public function addChild(Request $request){
 		$parent = Auth::user()->userable;
@@ -26,7 +26,7 @@ class ChildController extends Controller
 			'birthdate' => $request->birthdate,
 			'timeout' => 60
 		]);
-		$user = User::create([
+		User::create([
 			'email' => $request->email,
             'password' => Hash::make($request->passwords]),
             'userable_type' => 'App\Child',
@@ -48,12 +48,11 @@ class ChildController extends Controller
 		if(isset(request)->id && isset(request->url))
 		{
 			$child= Child::find($request->id);
-			$site= Site::create([
+			Site::create([
 	            'url' => $request->url,
 	            'child_id' => $child->id
 			]);
 		}
 		return redirect()->route("babah.index")->withMessage("Vous avez ajouté le site ".$request->url." a la liste noir de ".$child->email);	
 	}
-
 }

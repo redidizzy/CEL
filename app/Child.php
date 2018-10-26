@@ -10,7 +10,9 @@ class Child extends Model
 	public function user(){
 		$this->morphOne('App\User', 'userable');
 	}
-
+	public function questions(){
+		return $this->hasMany("App\Question");
+	}
 	public getEmail(){
 		return $this->user->email;
 	}
