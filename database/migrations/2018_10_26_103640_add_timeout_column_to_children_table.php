@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateConstraintsTable extends Migration
+class AddTimeoutColumnToChildrenTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateConstraintsTable extends Migration
      */
     public function up()
     {
-        Schema::create('constraints', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('child_id');
-            $table->integer('duree');
-            $table->timestamps();
+        Schema::table('children', function (Blueprint $table) {
+            $table->integer("timeout");
         });
     }
 
@@ -28,6 +25,8 @@ class CreateConstraintsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('constraints');
+        Schema::table('children', function (Blueprint $table) {
+            //
+        });
     }
 }

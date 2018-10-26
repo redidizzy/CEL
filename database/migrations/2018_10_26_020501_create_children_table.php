@@ -18,7 +18,7 @@ class CreateChildrenTable extends Migration
             $table->integer('parent_id');
             $table->integer('state');
             $table->timestamp('last_connect');
-            $table->timestamp("birthdate");
+            $table->timestamp("birthdate")->nullable();
             $table->timestamps();
         });
     }
